@@ -15,12 +15,18 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-    //fungsi eloquent menampilkan data menggunakan pagination
-    $mahasiswa = Mahasiswa::all(); // Mengambil semua isi tabel
-    $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(5);
-    return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
+        if (request('search')) {
+            $paginate = Mahasiswa::where('nama', 'like', '%' . request('search') . '%')
+                                    ->orwhere('nim', 'like', '%' . request('search') . '%')->paginate(5);
+            return view('mahasiswa.index', ['paginate'=>$paginate]);
+        } else {
+        $mahasiswa = Mahasiswa::all(); // Mengambil semua isi tabel
+        $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(5);
+        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
+        }
     }
-
+        
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -134,5 +140,21 @@ class MahasiswaController extends Controller
     Mahasiswa::where('nim', $nim)->delete();
     return redirect()->route('mahasiswa.index')
         -> with('success', 'Mahasiswa Berhasil Dihapus');
-    }
-}
+    }}
+
+    //         /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function search()
+    // {
+        
+    // }
+
+    // }
+
+
+
+

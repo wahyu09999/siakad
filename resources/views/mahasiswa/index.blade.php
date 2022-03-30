@@ -6,11 +6,45 @@
             <div class="pull-left mt-2">
                 <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
         </div>
+
+
+
+
         <div class="float-right my-2">
             <a class="btn btn-success" href="{{ route('mahasiswa.create') }}"> Input Mahasiswa</a>
         </div>
         </div>
     </div>
+
+
+
+
+
+
+<div class="row">
+    <form class="form-inline">
+
+            <div class="form-group mx-sm-3 mb-2">
+            <form action="{{ route('mahasiswa.index') }}">
+                 <label for="" class="sr-only"></label>
+                 <input type="text" class="form-control" placeholder="cari disini" name="search" value="{{ request('search')}}">
+                </div>
+             <button type="submit" class="btn btn-primary mb-2">Search</button>
+                </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 @if ($message = Session::get('success'))
     <div class="alert alert-success">
         <p>{{ $message }}</p>
