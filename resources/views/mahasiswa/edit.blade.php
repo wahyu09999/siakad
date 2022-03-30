@@ -36,6 +36,24 @@
             <label for="Jurusan">Jurusan</label>
             <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" value="{{ $Mahasiswa->jurusan }}" aria-describedby="Jurusan" >
         </div>
+
+        <div class="form-group">
+            <label for="jeniskelamin">jeniskelamin</label>
+            <input type="jeniskelamin" name="jeniskelamin" class="form-control" id="jeniskelamin" value="{{ $Mahasiswa->jeniskelamin }}" aria-describedby="jeniskelamin" >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" class="form-control" id="email" value="{{ $Mahasiswa->email }}" aria-describedby="email" >
+        </div>
+        <div class="form-group">
+            <label for="alamat">Alamat</label>
+            <input type="text" name="alamat" class="form-control" id="alamat" value="{{ $Mahasiswa->alamat }}" aria-describedby="alamat" >
+        </div>
+        <div class="form-group">
+            <label for="tgllahir">Tanggal Lahir</label>
+            <input type="text" name="tgllahir" class="form-control" id="tgllahir" value="{{ $Mahasiswa->tgllahir }}" aria-describedby="tgllahir" >
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         </div>

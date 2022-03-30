@@ -19,5 +19,9 @@ class Mahasiswa extends Model //Definisi Model
  'Nama',
  'Kelas',
  'Jurusan',
+ 'jeniskelamin',
+ 'email',
+ 'alamat',
+ 'tgllahir',
  ];
 };
