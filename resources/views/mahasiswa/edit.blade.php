@@ -28,20 +28,34 @@
             <label for="Nama">Nama</label>
             <input type="text" name="Nama" class="form-control" id="Nama" value="{{ $Mahasiswa->nama }}" aria-describedby="Nama" >
         </div>
-        <div class="form-group">
+
+        <!-- <div class="form-group">
             <label for="Kelas">Kelas</label>
             <input type="Kelas" name="Kelas" class="form-control" id="Kelas" value="{{ $Mahasiswa->kelas }}" aria-describedby="Kelas" >
-        </div>
+        </div> -->
+
+
+        <div class="form-group">
+        <label for="Kelas">Kelas</label>
+        <select class="form-control" name="Kelas">
+        @foreach($kelas as $kls)
+            <option value="{{$kls->id}}" {{ $Mahasiswa->kelas_id == $kls->id ? 'selected' : ''}}>{{$kls->nama_kelas}}</option>
+        @endforeach
+        </select>
+
+
+
         <div class="form-group">
             <label for="Jurusan">Jurusan</label>
             <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" value="{{ $Mahasiswa->jurusan }}" aria-describedby="Jurusan" >
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="jeniskelamin">jeniskelamin</label>
             <input type="jeniskelamin" name="jeniskelamin" class="form-control" id="jeniskelamin" value="{{ $Mahasiswa->jeniskelamin }}" aria-describedby="jeniskelamin" >
-        </div>
-        <div class="form-group">
+        </div> -->
+        
+        <!-- <div class="form-group">
             <label for="email">Email</label>
             <input type="text" name="email" class="form-control" id="email" value="{{ $Mahasiswa->email }}" aria-describedby="email" >
         </div>
@@ -52,7 +66,7 @@
         <div class="form-group">
             <label for="tgllahir">Tanggal Lahir</label>
             <input type="text" name="tgllahir" class="form-control" id="tgllahir" value="{{ $Mahasiswa->tgllahir }}" aria-describedby="tgllahir" >
-        </div>
+        </div> -->
 
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>

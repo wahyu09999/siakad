@@ -9,13 +9,13 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Nim: </b>{{$Mahasiswa->nim}}</li>
                 <li class="list-group-item"><b>Nama: </b>{{$Mahasiswa->nama}}</li>
-                <li class="list-group-item"><b>Kelas: </b>{{$Mahasiswa->kelas}}</li>
+                <li class="list-group-item"><b>Kelas: </b>{{$Mahasiswa->kelas->nama_kelas}}</li>
                 <li class="list-group-item"><b>Jurusan: </b>{{$Mahasiswa->jurusan}}</li>
                 
-                <li class="list-group-item"><b>jeniskelamin: </b>{{$Mahasiswa->jeniskelamin}}</li>
+                <!-- <li class="list-group-item"><b>jeniskelamin: </b>{{$Mahasiswa->jeniskelamin}}</li>
                 <li class="list-group-item"><b>email: </b>{{$Mahasiswa->email}}</li>
                 <li class="list-group-item"><b>alamat: </b>{{$Mahasiswa->alamat}}</li>
-                <li class="list-group-item"><b>tgllahir: </b>{{$Mahasiswa->tgllahir}}</li>
+                <li class="list-group-item"><b>tgllahir: </b>{{$Mahasiswa->tgllahir}}</li> -->
             </ul>
             </div>
             <a class="btn btn-success mt-3" href="{{ route('mahasiswa.index') }}">Kembali</a>

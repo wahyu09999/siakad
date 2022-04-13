@@ -23,36 +23,41 @@
                         <label for="Nim">Nim</label>
                         <input type="text" name="Nim" class="form-control" id="Nim" aria-describedby="Nim" >
                     </div>
+                    
                 <div class="form-group">
                     <label for="Nama">Nama</label>
                     <input type="Nama" name="Nama" class="form-control" id="Nama" ariadescribedby="Nama" >
                 </div>
-                <div class="form-group">
+
+                <!-- <div class="form-group">
                     <label for="Kelas">Kelas</label>
                     <input type="Kelas" name="Kelas" class="form-control" id="Kelas" ariadescribedby="password" >
-                </div>
+                </div> -->
+
+
+                <div class="form-group">
+                        <label for="Kelas">Kelas</label>
+                        <select name="Kelas"class="form-control">
+                            @foreach($kelas as $kls)
+                                <option value="{{$kls->id}}" >{{$kls->nama_kelas}} </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+
+
                 <div class="form-group">
                     <label for="Jurusan">Jurusan</label>
                     <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" ariadescribedby="Jurusan" >
                 </div>
 
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="jeniskelamin">jeniskelamin</label>
                     <input type="jeniskelamin" name="jeniskelamin" class="form-control" id="jeniskelamin" ariadescribedby="jeniskelamin" >
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" ariadescribedby="email" >
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <input type="alamat" name="alamat" class="form-control" id="alamat" ariadescribedby="alamat" >
-                </div>
-                <div class="form-group">
-                    <label for="tgllahir">Tanggal Lahir</label>
-                    <input type="tgllahir" name="tgllahir" class="form-control" id="tgllahir" ariadescribedby="tgllahir" >
-                </div>
+                </div> -->
+                
 
 
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Kelas;
 
 class MahasiswaController extends Controller
 {
@@ -20,10 +21,12 @@ class MahasiswaController extends Controller
                                     ->orwhere('nim', 'like', '%' . request('search') . '%')->paginate(5);
             return view('mahasiswa.index', ['paginate'=>$paginate]);
         } else {
-        $mahasiswa = Mahasiswa::all(); // Mengambil semua isi tabel
-        $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(5);
-        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
+        
         }
+
+        $mahasiswa = Mahasiswa::with('kelas')->get(); // Mengambil semua isi tabel
+        $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(3);
+        return view('mahasiswa.index', ['mahasiswa' => $mahasiswa,'paginate'=>$paginate]);
     }
         
    
@@ -33,8 +36,9 @@ class MahasiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('mahasiswa.create');
+    {   
+        $kelas = Kelas::all(); //mendapatkan data dari table kelas
+        return view('mahasiswa.create',['kelas'=> $kelas]);
     }
 
     /**
@@ -45,24 +49,43 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+
         //melakukan validasi data
     $request->validate([
         'Nim' => 'required',
         'Nama' => 'required',
         'Kelas' => 'required',
         'Jurusan' => 'required',
-        'jeniskelamin' => 'required',
-        'email' => 'required',
-        'alamat' => 'required',
-        'tgllahir' => 'required',
 
     ]);
+
+    $mahasiswa = new Mahasiswa;
+    $mahasiswa->nim= $request->get('Nim');
+    $mahasiswa->nama = $request->get('Nama');
+    $mahasiswa->jurusan = $request->get('Jurusan');
+    $mahasiswa->save();
+
+    $kelas = new Kelas;
+    $kelas->id = $request->get('kelas');
+
     //fungsi eloquent untuk menambah data
-    Mahasiswa::create($request->all());
+    $mahasiswa->kelas()->associate($kelas);
+    $mahasiswa->save();
+
+
     //jika data berhasil ditambahkan, akan kembali ke halaman utama
     return redirect()->route('mahasiswa.index')
         ->with('success', 'Mahasiswa Berhasil Ditambahkan');
+
+
+   
+
+
     }
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -73,8 +96,12 @@ class MahasiswaController extends Controller
     public function show($nim)
     {
         //menampilkan detail data dengan menemukan/berdasarkan Nim Mahasiswa
-        $Mahasiswa = Mahasiswa::where('nim', $nim)->first();
-        return view('mahasiswa.detail', compact('Mahasiswa'));
+        // $Mahasiswa = Mahasiswa::with('nim', $nim)->first();
+        // return view('mahasiswa.detail', compact('Mahasiswa'));
+
+
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
+        return view('mahasiswa.detail', ['Mahasiswa' => $Mahasiswa]);
     }
 
     /**
@@ -86,8 +113,12 @@ class MahasiswaController extends Controller
     public function edit($nim)
     {
         //menampilkan detail data dengan menemukan berdasarkan Nim Mahasiswa untuk diedit
-        $Mahasiswa = DB::table('mahasiswa')->where('nim', $nim)->first();
-        return view('mahasiswa.edit', compact('Mahasiswa'));        
+        // $Mahasiswa = DB::table('mahasiswa')->where('nim', $nim)->first();
+        // return view('mahasiswa.edit', compact('Mahasiswa'));    
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
+        $kelas = Kelas::all();
+        return view('mahasiswa.edit', compact('Mahasiswa', 'kelas'));
+        
     }
 
     /**
@@ -97,6 +128,10 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+
+
     public function update(Request $request, $nim)
     {
         //melakukan validasi data
@@ -105,25 +140,26 @@ class MahasiswaController extends Controller
             'Nama' => 'required',
             'Kelas' => 'required',
             'Jurusan' => 'required',
-            'jeniskelamin' => 'required',
-            'email' => 'required',
-            'alamat' => 'required',
-            'tgllahir' => 'required',
-    ]);
-    //fungsi eloquent untuk mengupdate data inputan kita
-    Mahasiswa::where('nim', $nim)
-        ->update([
-            'nim'=>$request->Nim,
-            'nama'=>$request->Nama,
-            'kelas'=>$request->Kelas,
-            'jurusan'=>$request->Jurusan,
-            'jeniskelamin'=>$request->jeniskelamin,
-            'email'=>$request->email,
-            'alamat'=>$request->alamat,
-            'tgllahir'=>$request->tgllahir,
+            // 'JenisKelamin'=> 'required',
+            // 'Email'=> 'required',
+            // 'Alamat'=> 'required',
+            // 'TanggalLahir'=> 'required', 
+        ]);
 
-    ]);
-    //jika data berhasil diupdate, akan kembali ke halaman utama
+        $mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
+        $mahasiswa->nim = $request->get('Nim');
+        $mahasiswa->nama = $request->get('Nama');
+        $mahasiswa->jurusan = $request->get('Jurusan');
+        $mahasiswa->save();
+        
+        $kelas = new Kelas;
+        $kelas->id = $request->get('Kelas');
+        
+        //Fungsi eloquent untuk menambah data dengan relasi belongsTo
+        $mahasiswa->kelas()->associate($kelas);
+        $mahasiswa->save();
+        
+        //jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa Berhasil Diupdate');
     }
@@ -140,7 +176,18 @@ class MahasiswaController extends Controller
     Mahasiswa::where('nim', $nim)->delete();
     return redirect()->route('mahasiswa.index')
         -> with('success', 'Mahasiswa Berhasil Dihapus');
-    }}
+    }
+
+
+
+    public function search()
+    {
+        
+    }
+
+
+
+}
 
     //         /**
     //  * Remove the specified resource from storage.
