@@ -22,4 +22,7 @@ Route::resource('mahasiswa', MahasiswaController::class);
     
 Route::get('/', function () {
     return view('welcome');
+
+    
 });
+Route::get('mahasiswa/nilai/{mahasiswa}', [MahasiswaController::class, 'Mahasiswa_MataKuliah'])->name('mahasiswa.nilai');
