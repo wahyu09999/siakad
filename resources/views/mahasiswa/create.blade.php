@@ -19,46 +19,30 @@
                 @endif
                 <form method="post" action="{{ route('mahasiswa.store') }}" id="myForm">
                 @csrf
+                    
+
+
                     <div class="form-group">
                         <label for="Nim">Nim</label>
                         <input type="text" name="Nim" class="form-control" id="Nim" aria-describedby="Nim" >
                     </div>
-                    
                 <div class="form-group">
                     <label for="Nama">Nama</label>
                     <input type="Nama" name="Nama" class="form-control" id="Nama" ariadescribedby="Nama" >
                 </div>
-
-                <!-- <div class="form-group">
-                    <label for="Kelas">Kelas</label>
-                    <input type="Kelas" name="Kelas" class="form-control" id="Kelas" ariadescribedby="password" >
-                </div> -->
-
-
-                <div class="form-group">
+                
+                    <div class="form-group">
                         <label for="Kelas">Kelas</label>
-                        <select name="Kelas"class="form-control">
+                        <select class="form-control" name="Kelas">
                             @foreach($kelas as $kls)
                                 <option value="{{$kls->id}}" >{{$kls->nama_kelas}} </option>
                             @endforeach
                         </select>
                     </div>
-
-
-
-
                 <div class="form-group">
                     <label for="Jurusan">Jurusan</label>
                     <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" ariadescribedby="Jurusan" >
                 </div>
-
-
-                <!-- <div class="form-group">
-                    <label for="jeniskelamin">jeniskelamin</label>
-                    <input type="jeniskelamin" name="jeniskelamin" class="form-control" id="jeniskelamin" ariadescribedby="jeniskelamin" >
-                </div> -->
-                
-
 
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

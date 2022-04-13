@@ -39,32 +39,28 @@
 @endif
 
 <table class="table table-bordered">
-    <tr>
+<tr>
         <th>Nim</th>
         <th>Nama</th>
         <th>Kelas</th>
         <th>Jurusan</th>
-
-        <!-- <th>Jenis Kelamin</th>
+        <!-- <th>JenisKelamin</th>
         <th>Email</th>
         <th>Alamat</th>
-        <th>Tanggal Lahir</th> -->
-
-        <th width="280px">Action</th>
+        <th>TanggalLahir</th> -->
+        <th width="280x">Action</th>
     </tr>
     @foreach ($paginate as $mhs)
     <tr>
-
         <td>{{ $mhs ->nim }}</td>
         <td>{{ $mhs ->nama }}</td>
-        <td>{{ $mhs ->kelas->nama_kelas }}</td>
+        <!-- <td>{{ $mhs ->kelas }}</td> -->
+        <td>{{ $mhs ->kelas -> nama_kelas}}</td>
         <td>{{ $mhs ->jurusan }}</td>
-
-        <!-- <td>{{ $mhs ->jeniskelamin }}</td>
-        <td>{{ $mhs ->email }}</td>
-        <td>{{ $mhs ->alamat }}</td>
-        <td>{{ $mhs ->tgllahir }}</td> -->
-
+        <!-- <td>{{ $mhs ->JenisKelamin }}</td> -->
+        <!-- <td>{{ $mhs ->email }}</td>
+        <td>{{ $mhs ->Alamat }}</td>
+        <td>{{ $mhs ->TanggalLahir }}</td> -->
         <td>
         <form action="{{ route('mahasiswa.destroy',['mahasiswa'=>$mhs->nim]) }}" method="POST">
             <a class="btn btn-info" href="{{ route('mahasiswa.show',$mhs->nim) }}">Show</a>
