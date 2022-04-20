@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use App\Models\Mahasiswa_MataKuliah;
 use App\Models\Kelas;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -183,8 +184,17 @@ class MahasiswaController extends Controller
         return view('mahasiswa.nilai', ['mahasiswa' => $mahasiswa]);
     }
 
+    public function cetak_pdf($nim){
+        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+        $nilai = Mahasiswa_MataKuliah::where('mahasiswa_id', $mahasiswa->id_mahasiswa)
+                                       ->with('matakuliah')
+                                       ->with('mahasiswa')
+                                       ->get();
+        $nilai->mahasiswa = Mahasiswa::with('kelas')->where('nim', $nim)->first();
+        $pdf = PDF::loadview('mahasiswa.khs_pdf', compact('nilai'));
+        return $pdf->stream();
 
-
-
+       
+    }
 
 }
