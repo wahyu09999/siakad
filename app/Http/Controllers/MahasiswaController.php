@@ -8,6 +8,7 @@ use App\Models\MataKuliah;
 use App\Models\Mahasiswa_MataKuliah;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class MahasiswaController extends Controller
 {
@@ -53,14 +54,23 @@ class MahasiswaController extends Controller
             'Nama' => 'required',
             'Kelas' => 'required',
             'Jurusan' => 'required',
+            'Foto'=> 'required',
         ]);
-      
+            // 'JenisKelamin'=> 'required',
+            // 'Email'=> 'required',
+            // 'Alamat'=> 'required',
+            // 'TanggalLahir'=> 'required',
+        if ($request->file('Foto')) {
+            $image_name = $request->file('Foto')->store('images', 'public');
+        }
         //fungsi eloquent untuk menambah data
         $mahasiswa = new Mahasiswa;
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
         $mahasiswa->jurusan = $request->get('Jurusan');
-        // $mahasiswa->save();
+        $mahasiswa->foto = $image_name;
+
+        //$mahasiswa->save();
         
         $kelas = new Kelas;
         $kelas->id = $request->get('Kelas');
@@ -68,6 +78,7 @@ class MahasiswaController extends Controller
         //Fungsi eloquent untuk menambah data dengan relasi belongsTo
         $mahasiswa->kelas()->associate($kelas);
         $mahasiswa->save();
+
 
         // Mahasiswa::create($request->all());
 
@@ -126,6 +137,17 @@ class MahasiswaController extends Controller
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
         $mahasiswa->jurusan = $request->get('Jurusan');
+
+        if ($mahasiswa->foto && file_exists(storage_path('app/public/'. $mahasiswa->foto))) {
+            Storage::delete('public/'. $mahasiswa->foto);
+        }
+
+        //   $image_name = '';
+        if ($request->file('foto')) {
+        $image_name = $request->file('foto')->store('images', 'public');
+    }
+        $mahasiswa->foto = $image_name;
+
         $mahasiswa->save();
         
         $kelas = new Kelas;
@@ -160,5 +182,9 @@ class MahasiswaController extends Controller
         $mahasiswa->mahasiswa = Mahasiswa::with('kelas')->where('id_mahasiswa', $Nim)->first();
         return view('mahasiswa.nilai', ['mahasiswa' => $mahasiswa]);
     }
+
+
+
+
 
 }

@@ -47,6 +47,11 @@
             <th>Nama</th>
             <th>Kelas</th>
             <th>Jurusan</th>
+            <th>Foto</th>
+
+
+
+            
             <!-- <th>JenisKelamin</th>
             <th>E-mail</th>
             <th>Alamat</th>
@@ -61,6 +66,7 @@
             <td>{{ $mhs ->nama }}</td>
             <td>{{ $mhs ->kelas->nama_kelas }}</td>
             <td>{{ $mhs ->jurusan }}</td>
+            <td><img style="width: 80px; height: 80px; overflow: hidden" class="rounded-circle" src="{{ asset('./storage/'. $mhs->foto) }}" alt=""></td>
             <!-- <td>{{ $mhs ->jenisKelamin }}</td>
             <td>{{ $mhs ->email }}</td>
             <td>{{ $mhs ->alamat }}</td>
